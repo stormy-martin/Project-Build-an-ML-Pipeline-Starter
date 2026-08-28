@@ -6,6 +6,31 @@ to be retrained with the same cadence, necessitating an end-to-end pipeline that
 
 In this project you will build such a pipeline.
 
+## Project Results & Links
+
+- **GitHub repository:** https://github.com/stormy-martin/Project-Build-an-ML-Pipeline-Starter
+- **W&B project (public):** https://wandb.ai/stormymartin/nyc_airbnb
+
+### Pipeline summary
+
+This repo implements the full pipeline: fetching raw data, cleaning it, running automated data-quality tests, splitting into train/validation/test sets, training a Random Forest regressor (with a hyperparameter sweep), selecting and testing the best model, and releasing the pipeline as a versioned, reusable GitHub release.
+
+### Final model performance
+
+The best model (Random Forest, `max_depth=15`, `n_estimators=100`) was selected from a sweep of 5 training runs by validation MAE, tagged `prod` in W&B, and verified against the held-out test set:
+
+| Metric | Validation | Test |
+|---|---|---|
+| MAE | 34.13 | 33.85 |
+| R² | 0.552 | 0.564 |
+
+Test performance is comparable to validation performance, indicating no overfitting.
+
+### Releases
+
+- **v1.0.0** — initial pipeline release.
+- **v1.0.1** — added a geolocation boundary filter to `basic_cleaning` after discovering `sample2.csv` contained a data point outside the expected NYC lat/long range (caught by `test_proper_boundaries`). Retraining on `sample2.csv` under this release succeeded, producing an updated model (MAE 32.42, R² 0.580).
+  
 ## Table of contents
 
 - [Preliminary steps](#preliminary-steps)
